@@ -4,9 +4,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Spike Free Bootstrap Admin Template by WrapPixel</title>
+    <title>Create Menu Item | Donatellos Admin</title>
     <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
     <link rel="stylesheet" href="../assets/css/styles.min.css" />
+<link rel="stylesheet" href="{{ asset('assets/css/custom-dark-theme.css') }}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" />
 </head>
 
 <body>
@@ -19,7 +21,7 @@
             <div>
                 <div class="brand-logo d-flex align-items-center justify-content-between">
                     <a href="{{ route("dashboard") }}" class="text-nowrap logo-img">
-                        <img src="../assets/images/logos/logo.svg" alt="" />
+                        <span class="logo-img text-nowrap d-flex align-items-center fw-bolder fs-5 text-white" style="font-size: 1.3rem !important;">Donatellos <span class="text-primary ms-1" style="color: #a3e635 !important;">Admin</span></span>
                     </a>
                     <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                         <i class="ti ti-x fs-8"></i>
@@ -41,26 +43,49 @@
                         </li>
                         <li class="nav-small-cap">
                             <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
-                            <span class="hide-menu">Products</span>
+                            <span class="hide-menu">Menu Items</span>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link primary-hover-bg" href="{{ url("/products") }}"
                                 aria-expanded="false">
                                 <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
-                                <span class="hide-menu">Products</span>
+                                <span class="hide-menu">Menu Items</span>
                             </a>
                         </li>
                         <li class="nav-small-cap">
                             <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
-                            <span class="hide-menu">Categorias</span>
+                            <span class="hide-menu">Menu Categories</span>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link primary-hover-bg" href="{{ url("/categories") }}"
                                 aria-expanded="false">
                                 <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
-                                <span class="hide-menu">Categorias</span>
+                                <span class="hide-menu">Menu Categories</span>
                             </a>
                         </li>
+                        <li class="nav-small-cap">
+                            <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
+                            <span class="hide-menu">Calculadora</span>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link primary-hover-bg" href="{{ url("/calculadora") }}"
+                                aria-expanded="false">
+                                <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
+                                <span class="hide-menu">Calculadora</span>
+                            </a>
+                        </li>
+                        <li class="nav-small-cap">
+                            <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
+                            <span class="hide-menu">Calculadora de promedios</span>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link primary-hover-bg" href="{{ url("/promedios") }}"
+                                aria-expanded="false">
+                                <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
+                                <span class="hide-menu">Calculadora de promedios</span>
+                            </a>
+                        </li>
+
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
@@ -142,71 +167,68 @@
                     <!--  Header End -->
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title fw-semibold mb-4">Agregar un producto</h5>
+                            <h5 class="card-title fw-semibold mb-4">Create Menu Item</h5>
+                            @if($errors->any())
+                            <div class="alert alert-danger" role="alert">
+                                <ul class="mb-0">
+                                    @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            @endif
                             <div class="card">
                                 <div class="card-body">
                                     <form action="{{ route("products.store") }}" method="POST"
                                         enctype="multipart/form-data">
                                         @csrf
 
-                                        <!-- Nombre -->
                                         <div class="mb-3">
-                                            <label for="name" class="form-label">Nombre del producto</label>
+                                            <label for="name" class="form-label">Item Name</label>
                                             <input type="text" class="form-control" id="name" name="name" required
-                                                maxlength="255">
+                                                maxlength="255" value="{{ old('name') }}">
                                         </div>
 
-                                        <!-- Descripción -->
                                         <div class="mb-3">
-                                            <label for="description" class="form-label">Descripción</label>
+                                            <label for="description" class="form-label">Description</label>
                                             <textarea class="form-control" id="description" name="description" rows="3"
-                                                required></textarea>
+                                                required>{{ old('description') }}</textarea>
                                         </div>
 
-                                        <!-- Precio -->
                                         <div class="mb-3">
-                                            <label for="price" class="form-label">Precio ($)</label>
+                                            <label for="price" class="form-label">Price ($)</label>
                                             <input type="number" class="form-control" id="price" name="price"
-                                                step="0.01" min="0" required>
+                                                step="0.01" min="0" required value="{{ old('price') }}">
                                         </div>
 
-                                        <!-- Stock -->
                                         <div class="mb-3">
-                                            <label for="stock" class="form-label">Stock</label>
-                                            <input type="number" class="form-control" id="stock" name="stock" min="0"
-                                                required>
-                                        </div>
-
-                                        <!-- Estado -->
-                                        <div class="mb-3">
-                                            <label for="status" class="form-label">Estado</label>
+                                            <label for="status" class="form-label">Availability</label>
                                             <select class="form-select" id="status" name="status" required>
-                                                <option value="">Seleccione un estado</option>
-                                                <option value="activo">Activo</option>
-                                                <option value="inactivo">Inactivo</option>
+                                                <option value="">Select availability</option>
+                                                <option value="available" {{ old('status') == 'available' ? 'selected' : '' }}>Available</option>
+                                                <option value="unavailable" {{ old('status') == 'unavailable' ? 'selected' : '' }}>Unavailable</option>
                                             </select>
                                         </div>
 
-                                        <!-- Imagen -->
                                         <div class="mb-3">
-                                            <label for="image" class="form-label">Imagen del producto</label>
-                                            <input type="file" class="form-control" id="image" name="image"
-                                                accept="image/*" required>
+                                            <label for="image" class="form-label">Item Image</label>
+                                            <input type="file" class="dropify" id="image" name="image"
+                                                accept="image/*" data-allowed-file-extensions="jpg png jpeg gif webp">
                                         </div>
 
-                                        <!-- Categoría -->
                                         <div class="mb-3">
-                                            <label for="category_id" class="form-label">Categoría</label>
+                                            <label for="category_id" class="form-label">Menu Category</label>
                                             <select class="form-select" id="category_id" name="category_id" required>
-                                                <option value="">Seleccione una categoría</option>
+                                                <option value="">Select category</option>
                                                 @foreach($categories as $category)
-                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                                    {{ $category->name }}
+                                                </option>
                                                 @endforeach
                                             </select>
                                         </div>
 
-                                        <!-- Botón de envío -->
-                                        <button type="submit" class="btn btn-primary">Guardar producto</button>
+                                        <button type="submit" class="btn btn-primary">Save Menu Item</button>
                                     </form>
                                 </div>
                             </div>
@@ -224,6 +246,12 @@
     <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
     <!-- solar icons -->
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.dropify').dropify();
+        });
+    </script>
 </body>
 
 </html>

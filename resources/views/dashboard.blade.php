@@ -7,6 +7,7 @@
     <title>Dashboard | Laravel</title>
     <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
     <link rel="stylesheet" href="{{ asset("assets/css/styles.min.css") }}" />
+<link rel="stylesheet" href="{{ asset('assets/css/custom-dark-theme.css') }}" />
 </head>
 
 <body>
@@ -21,7 +22,7 @@
             <div>
                 <div class="brand-logo d-flex align-items-center justify-content-between">
                     <a href="{{ route("dashboard") }}" class="text-nowrap logo-img">
-                        <img src="../assets/images/logos/logo.svg" alt="" />
+                        <span class="logo-img text-nowrap d-flex align-items-center fw-bolder fs-5 text-white" style="font-size: 1.3rem !important;">Donatellos <span class="text-primary ms-1" style="color: #a3e635 !important;">Admin</span></span>
                     </a>
                     <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                         <i class="ti ti-x fs-8"></i>
@@ -43,24 +44,24 @@
                         </li>
                         <li class="nav-small-cap">
                             <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
-                            <span class="hide-menu">Products</span>
+                            <span class="hide-menu">Menu Items</span>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link primary-hover-bg" href="{{ url("/products") }}"
                                 aria-expanded="false">
                                 <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
-                                <span class="hide-menu">Products</span>
+                                <span class="hide-menu">Menu Items</span>
                             </a>
                         </li>
                         <li class="nav-small-cap">
                             <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
-                            <span class="hide-menu">Categorias</span>
+                            <span class="hide-menu">Menu Categories</span>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link primary-hover-bg" href="{{ url("/categories") }}"
                                 aria-expanded="false">
                                 <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
-                                <span class="hide-menu">Categorias</span>
+                                <span class="hide-menu">Menu Categories</span>
                             </a>
                         </li>
                         <li class="nav-small-cap">

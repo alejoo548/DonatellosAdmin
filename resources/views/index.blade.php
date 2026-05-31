@@ -7,6 +7,7 @@
     <title>Dashboard | Laravel</title>
     <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
     <link rel="stylesheet" href="{{ asset("assets/css/styles.min.css") }}" />
+<link rel="stylesheet" href="{{ asset('assets/css/custom-dark-theme.css') }}" />
 </head>
 
 <body>
@@ -20,7 +21,7 @@
             <div>
                 <div class="brand-logo d-flex align-items-center justify-content-between">
                     <a href="{{ route("dashboard") }}" class="text-nowrap logo-img">
-                        <img src="../assets/images/logos/logo.svg" alt="" />
+                        <span class="logo-img text-nowrap d-flex align-items-center fw-bolder fs-5 text-white" style="font-size: 1.3rem !important;">Donatellos <span class="text-primary ms-1" style="color: #a3e635 !important;">Admin</span></span>
                     </a>
                     <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                         <i class="ti ti-x fs-8"></i>
@@ -42,26 +43,49 @@
                         </li>
                         <li class="nav-small-cap">
                             <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
-                            <span class="hide-menu">Products</span>
+                            <span class="hide-menu">Menu Items</span>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link primary-hover-bg" href="{{ url("/products") }}"
                                 aria-expanded="false">
                                 <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
-                                <span class="hide-menu">Products</span>
+                                <span class="hide-menu">Menu Items</span>
                             </a>
                         </li>
                         <li class="nav-small-cap">
                             <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
-                            <span class="hide-menu">Categorias</span>
+                            <span class="hide-menu">Menu Categories</span>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link primary-hover-bg" href="{{ url("/categories") }}"
                                 aria-expanded="false">
                                 <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
-                                <span class="hide-menu">Categorias</span>
+                                <span class="hide-menu">Menu Categories</span>
                             </a>
                         </li>
+                        <li class="nav-small-cap">
+                            <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
+                            <span class="hide-menu">Calculadora</span>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link primary-hover-bg" href="{{ url("/calculadora") }}"
+                                aria-expanded="false">
+                                <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
+                                <span class="hide-menu">Calculadora</span>
+                            </a>
+                        </li>
+                        <li class="nav-small-cap">
+                            <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
+                            <span class="hide-menu">Calculadora de promedios</span>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link primary-hover-bg" href="{{ url("/promedios") }}"
+                                aria-expanded="false">
+                                <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
+                                <span class="hide-menu">Calculadora de promedios</span>
+                            </a>
+                        </li>
+
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
@@ -145,9 +169,8 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
-                                <h4 class="card-title mb-4 pb-2">Información Productos</h4>
-                                <a href="{{ route("products.create") }}" class="btn btn-primary mb-4">Agregar
-                                    Producto</a>
+                                <h4 class="card-title mb-4 pb-2">Menu Items</h4>
+                                <a href="{{ route("products.create") }}" class="btn btn-primary mb-4">Add Menu Item</a>
                             </div>
                             @if (session('success'))
                             <div class="alert alert-success" role="alert">
@@ -160,12 +183,11 @@
                                     <thead>
                                         <!-- start row -->
                                         <tr>
-                                            <th>Nombre</th>
-                                            <th>Descripción</th>
-                                            <th>Precio</th>
-                                            <th>Stock</th>
-                                            <th>Estado</th>
-                                            <th>Categoria</th>
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Price</th>
+                                            <th>Availability</th>
+                                            <th>Category</th>
                                             <th>Acciones</th>
                                         </tr>
                                         <!-- end row -->
@@ -174,7 +196,7 @@
                                         @foreach($products as $product)
                                         @if ($product == null)
                                         <tr>
-                                            <td colspan="7">No hay productos registrados</td>
+                                            <td colspan="6">No menu items registered.</td>
                                         </tr>
                                         @else
                                         <tr>

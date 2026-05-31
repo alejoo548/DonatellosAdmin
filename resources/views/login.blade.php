@@ -7,13 +7,14 @@
     <title>Sign-In Page</title>
     <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
     <link rel="stylesheet" href="{{ asset("assets/css/styles.min.css") }}" />
+<link rel="stylesheet" href="{{ asset('assets/css/custom-dark-theme.css') }}" />
 </head>
 
 <body>
     <!-- Body Wrapper -->
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
         data-sidebar-position="fixed" data-header-position="fixed">
-        <div class="position-relative overflow-hidden text-bg-light min-vh-100 d-flex align-items-center
+        <div class="position-relative overflow-hidden min-vh-100 d-flex align-items-center
 justify-content-center">
             <div class="d-flex align-items-center justify-content-center w-100">
                 <div class="row justify-content-center w-100">
@@ -21,27 +22,22 @@ justify-content-center">
                         <div class="card mb-0">
                             <div class="card-body">
                                 <form action="{{ route('login.store') }}" method="post">
-                                    {{-- Utilizamos el token para la protección de la información --}}
                                     @csrf
                                     <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Correo Electronico</label>
+                                        <label for="exampleInputEmail1" class="form-label">Email</label>
                                         <input type="email" class="form-control" id="exampleInputEmail1"
                                             aria-describedby="emailHelp" name="email">
 
                                     </div>
                                     <div class="mb-4">
-                                        <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+                                        <label for="exampleInputPassword1" class="form-label">Password</label>
                                         <input type="password" class="form-control" id="exampleInputPassword1"
                                             name="password">
                                     </div>
-                                    <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4">Iniciar
+                                    <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4">Sign
 
-                                        Sesión</button>
+                                        In</button>
 
-                                    {{-- Manejamos mostrar mensajes por medio de sesiones, las cuales se encuentran
-
-dentro de nuestro LoginController --}}
-                                    {{-- Inicio Alertas --}}
                                     @if (session('error'))
                                     <div class="alert alert-danger" role="alert">
                                         {{ session('error') }}
@@ -67,12 +63,11 @@ dentro de nuestro LoginController --}}
                                         {{ session('logout') }}
                                     </div>
                                     @endif
-                                    {{-- Fin Alertas --}}
                                     <div class="d-flex align-items-center justify-content-center">
-                                        <p class="fs-4 mb-0 fw-bold">No tienes una cuenta?</p>
-                                        <a class="text-primary fw-bold ms-2" href="{{ route("register") }}">Crear una
+                                        <p class="fs-4 mb-0 fw-bold">Do not have an account?</p>
+                                        <a class="text-primary fw-bold ms-2" href="{{ route("register") }}">Create an
 
-                                            cuenta</a>
+                                            account</a>
 
                                     </div>
                                 </form>

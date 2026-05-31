@@ -8,6 +8,12 @@ if [ ! -f .env ]; then
 fi
 
 mkdir -p database storage/framework/cache/data storage/framework/sessions storage/framework/testing storage/framework/views storage/logs bootstrap/cache
+mkdir -p storage/app/public
+
+if [ ! -L public/storage ]; then
+    rm -rf public/storage
+    ln -s /var/www/html/storage/app/public public/storage
+fi
 
 if [ "${DB_CONNECTION:-sqlite}" = "sqlite" ]; then
     touch "${DB_DATABASE:-/var/www/html/storage/database.sqlite}"

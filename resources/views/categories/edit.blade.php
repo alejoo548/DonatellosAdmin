@@ -4,9 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Categorias | Laravel</title>
+    <title>Edit Menu Category | Donatellos Admin</title>
     <link rel="shortcut icon" type="image/png" href="{{ asset("assets/images/logos/favicon.png") }}" />
     <link rel="stylesheet" href="{{ asset("assets/css/styles.min.css") }}" />
+<link rel="stylesheet" href="{{ asset('assets/css/custom-dark-theme.css') }}" />
 </head>
 
 <body>
@@ -19,7 +20,7 @@
             <div>
                 <div class="brand-logo d-flex align-items-center justify-content-between">
                     <a href="{{ route("dashboard") }}" class="text-nowrap logo-img">
-                        <img src="../assets/images/logos/logo.svg" alt="" />
+                        <span class="logo-img text-nowrap d-flex align-items-center fw-bolder fs-5 text-white" style="font-size: 1.3rem !important;">Donatellos <span class="text-primary ms-1" style="color: #a3e635 !important;">Admin</span></span>
                     </a>
                     <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                         <i class="ti ti-x fs-8"></i>
@@ -41,26 +42,49 @@
                         </li>
                         <li class="nav-small-cap">
                             <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
-                            <span class="hide-menu">Products</span>
+                            <span class="hide-menu">Menu Items</span>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link primary-hover-bg" href="{{ url("/products") }}"
                                 aria-expanded="false">
                                 <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
-                                <span class="hide-menu">Products</span>
+                                <span class="hide-menu">Menu Items</span>
                             </a>
                         </li>
                         <li class="nav-small-cap">
                             <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
-                            <span class="hide-menu">Categorias</span>
+                            <span class="hide-menu">Menu Categories</span>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link primary-hover-bg" href="{{ url("/categories") }}"
                                 aria-expanded="false">
                                 <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
-                                <span class="hide-menu">Categorias</span>
+                                <span class="hide-menu">Menu Categories</span>
                             </a>
                         </li>
+                        <li class="nav-small-cap">
+                            <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
+                            <span class="hide-menu">Calculadora</span>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link primary-hover-bg" href="{{ url("/calculadora") }}"
+                                aria-expanded="false">
+                                <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
+                                <span class="hide-menu">Calculadora</span>
+                            </a>
+                        </li>
+                        <li class="nav-small-cap">
+                            <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
+                            <span class="hide-menu">Calculadora de promedios</span>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link primary-hover-bg" href="{{ url("/promedios") }}"
+                                aria-expanded="false">
+                                <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
+                                <span class="hide-menu">Calculadora de promedios</span>
+                            </a>
+                        </li>
+
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
@@ -142,7 +166,7 @@
                     <!--  Header End -->
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title fw-semibold mb-4">Editar categoria</h5>
+                            <h5 class="card-title fw-semibold mb-4">Edit Menu Category</h5>
                             <div class="card">
                                 <div class="card-body">
                                     <form action="{{ route("categories.update", $category->id) }}" method="POST"
@@ -150,22 +174,19 @@
                                         @method("put")
                                         @csrf
 
-                                        <!-- Nombre -->
                                         <div class="mb-3">
-                                            <label for="name" class="form-label">Nombre de Categoria</label>
+                                            <label for="name" class="form-label">Category Name</label>
                                             <input type="text" class="form-control" id="name" name="name"
                                                 value="{{ old('name', $category->name) }}" required maxlength="255">
                                         </div>
 
-                                        <!-- Descripción -->
                                         <div class="mb-3">
-                                            <label for="description" class="form-label">Descripción</label>
+                                            <label for="description" class="form-label">Description</label>
                                             <textarea class="form-control" id="description" name="description" rows="3"
                                                 required>{{ old('description', $category->description) }}</textarea>
                                         </div>
 
-                                        <!-- Botón de envío -->
-                                        <button type="submit" class="btn btn-primary">Guardar categoria</button>
+                                        <button type="submit" class="btn btn-primary">Save Menu Category</button>
                                     </form>
                                 </div>
                             </div>

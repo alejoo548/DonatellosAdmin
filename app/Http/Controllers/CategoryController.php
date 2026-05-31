@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 
 class CategoryController extends Controller
@@ -37,7 +38,7 @@ class CategoryController extends Controller
         $validatedData = $request->validated();
         Category::create($validatedData);
 
-        return Redirect::route('categories.index')->with('success', 'Category has been created!');
+        return Redirect::route('categories.index')->with('success', 'Menu category has been created.');
     }
 
     /**
@@ -66,14 +67,16 @@ class CategoryController extends Controller
         $validatedData = $request->validated();
         Category::where('id', $category->id)->update($validatedData);
 
-        return Redirect::route('categories.index')->with('success', 'Category has been updated!');
+        return Redirect::route('categories.index')->with('success', 'Menu category has been updated.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy(Category $category): RedirectResponse
     {
-        //
+        $category->delete();
+
+        return Redirect::route('categories.index')->with('success', 'Menu category has been deleted.');
     }
 }

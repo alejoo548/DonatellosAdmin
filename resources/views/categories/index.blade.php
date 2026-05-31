@@ -4,9 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Categorías | DrugStore</title>
+    <title>Menu Categories | Donatellos Admin</title>
     <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
     <link rel="stylesheet" href="{{ asset('assets/css/styles.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('assets/css/custom-dark-theme.css') }}" />
 </head>
 
 <body>
@@ -15,15 +16,17 @@
 
         <!-- Sidebar -->
         <aside class="left-sidebar">
+            <!-- Sidebar scroll-->
             <div>
                 <div class="brand-logo d-flex align-items-center justify-content-between">
-                    <a href="{{ route('dashboard') }}" class="text-nowrap logo-img">
-                        <img src="../assets/images/logos/logo.svg" alt="" />
+                    <a href="{{ route("dashboard") }}" class="text-nowrap logo-img">
+                        <span class="logo-img text-nowrap d-flex align-items-center fw-bolder fs-5 text-white" style="font-size: 1.3rem !important;">Donatellos <span class="text-primary ms-1" style="color: #a3e635 !important;">Admin</span></span>
                     </a>
                     <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                         <i class="ti ti-x fs-8"></i>
                     </div>
                 </div>
+                <!-- Sidebar navigation-->
                 <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
                     <ul id="sidebarnav">
                         <li class="nav-small-cap">
@@ -31,34 +34,62 @@
                             <span class="hide-menu">Home</span>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link primary-hover-bg" href="{{ route('dashboard') }}" aria-expanded="false">
+                            <a class="sidebar-link primary-hover-bg" href="{{ route("dashboard") }}"
+                                aria-expanded="false">
                                 <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
                                 <span class="hide-menu">Dashboard</span>
                             </a>
                         </li>
                         <li class="nav-small-cap">
                             <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
-                            <span class="hide-menu">Products</span>
+                            <span class="hide-menu">Menu Items</span>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link primary-hover-bg" href="{{ url('/products') }}" aria-expanded="false">
+                            <a class="sidebar-link primary-hover-bg" href="{{ url("/products") }}"
+                                aria-expanded="false">
                                 <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
-                                <span class="hide-menu">Products</span>
+                                <span class="hide-menu">Menu Items</span>
                             </a>
                         </li>
                         <li class="nav-small-cap">
                             <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
-                            <span class="hide-menu">Categorias</span>
+                            <span class="hide-menu">Menu Categories</span>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link active primary-hover-bg" href="{{ url('/categories') }}" aria-expanded="false">
+                            <a class="sidebar-link primary-hover-bg" href="{{ url("/categories") }}"
+                                aria-expanded="false">
                                 <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
-                                <span class="hide-menu">Categorias</span>
+                                <span class="hide-menu">Menu Categories</span>
                             </a>
                         </li>
+                        <li class="nav-small-cap">
+                            <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
+                            <span class="hide-menu">Calculadora</span>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link primary-hover-bg" href="{{ url("/calculadora") }}"
+                                aria-expanded="false">
+                                <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
+                                <span class="hide-menu">Calculadora</span>
+                            </a>
+                        </li>
+                        <li class="nav-small-cap">
+                            <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
+                            <span class="hide-menu">Calculadora de promedios</span>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link primary-hover-bg" href="{{ url("/promedios") }}"
+                                aria-expanded="false">
+                                <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
+                                <span class="hide-menu">Calculadora de promedios</span>
+                            </a>
+                        </li>
+
                     </ul>
                 </nav>
+                <!-- End Sidebar navigation -->
             </div>
+            <!-- End Sidebar scroll-->
         </aside>
 
         <!-- Main wrapper -->
@@ -106,9 +137,9 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center justify-content-between mb-4">
-                                        <h5 class="card-title fw-semibold mb-0">Información Categorías</h5>
+                                        <h5 class="card-title fw-semibold mb-0">Menu Categories</h5>
                                         <a href="{{ route('categories.create') }}" class="btn btn-primary">
-                                            <i class="ti ti-plus me-1"></i> Agregar Categoría
+                                            <i class="ti ti-plus me-1"></i> Add Menu Category
                                         </a>
                                     </div>
 
@@ -123,9 +154,9 @@
                                         <table class="table table-borderless align-middle text-nowrap">
                                             <thead>
                                                 <tr>
-                                                    <th>Nombre</th>
-                                                    <th>Descripción</th>
-                                                    <th>Acciones</th>
+                                                    <th>Name</th>
+                                                    <th>Description</th>
+                                                    <th>Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -138,7 +169,7 @@
                                                             <i class="ti ti-pencil"></i>
                                                         </a>
                                                         <form action="{{ route('categories.destroy', $category) }}" method="POST" class="d-inline"
-                                                            onsubmit="return confirm('¿Eliminar esta categoría?')">
+                                                            onsubmit="return confirm('Delete this menu category?')">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="btn btn-sm btn-outline-danger">
@@ -149,7 +180,7 @@
                                                 </tr>
                                                 @empty
                                                 <tr>
-                                                    <td colspan="3" class="text-center text-muted py-4">No hay categorías registradas.</td>
+                                                    <td colspan="3" class="text-center text-muted py-4">No menu categories registered.</td>
                                                 </tr>
                                                 @endforelse
                                             </tbody>

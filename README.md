@@ -1,58 +1,68 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Donatellos Admin Panel
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Donatellos Admin Panel es una plataforma de administración web diseñada específicamente para gestionar el catálogo (categorías y productos) de la aplicación de Donatello's. Proporciona una interfaz gráfica premium, oscura (Dark Mode) y con estética neón que incluye funcionalidades modernas de UI como *Dropify* para arrastrar y soltar imágenes de forma amigable.
 
-## About Laravel
+## 🚀 Tecnologías Utilizadas
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+El proyecto está construido sobre un stack robusto y moderno, dockerizado para un despliegue sin fricciones.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Backend
+- **PHP 8.4**
+- **Laravel 11.x**: Framework PHP principal.
+- **Base de Datos**: MySQL (conectado a través de una red externa de Docker a un servicio de BD).
+- **Seguridad Antivirus en Imágenes**: Validación "Magic Bytes" de Mimetypes nativa y un escáner Polyglot a nivel binario para evitar inyección de código PHP en metadatos de imágenes (`.jpg`, `.png`, `.gif`, `.webp`).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Frontend
+- **Blade Templates**: Motor de plantillas nativo de Laravel.
+- **Bootstrap 5 + CSS Custom**: Estructura de la UI con un fuerte tema oscuro (Dark Theme) personalizado (`custom-dark-theme.css`) utilizando esquemas de colores vibrantes y efectos *glassmorphism*.
+- **Vite & Tailwind CSS**: Compilador de assets.
+- **Dropify**: Implementado con estilo "Dark" para la previsualización y carga arrastrar/soltar de imágenes.
+- **Iconify (Solar Icons)**: Para la iconografía dinámica.
+- **Google Fonts (Outfit)**: Tipografía principal de alta calidad.
 
-## Learning Laravel
+### Infraestructura
+- **Docker & Docker Compose**: Configuración en contenedores para correr la aplicación sin necesidad de instalar dependencias locales en tu máquina.
+- **Apache2**: Servidor web principal incrustado en el contenedor PHP.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 💻 Guía de Instalación y Ejecución con Docker
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+Sigue estos pasos para descargar y levantar el proyecto de cero en cualquier computadora.
 
-## Agentic Development
+### Requisitos Previos
+1. Tener [Docker Desktop](https://www.docker.com/products/docker-desktop/) instalado y corriendo en tu computadora.
+2. Tener [Git](https://git-scm.com/) instalado.
+3. Asegurarte de que el puerto `8000` de tu máquina esté libre.
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
+### 1. Clonar el repositorio
+Abre tu terminal (o consola de comandos) y ejecuta:
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone <URL_DE_TU_REPOSITORIO>
+cd DrugStore
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### 2. Configurar la Red Externa de Base de Datos
+El proyecto asume que existe una red de Docker y un contenedor MySQL externo de donde toma la base de datos (por la configuración en `docker-compose.yml`). Para que el contenedor pueda iniciar sin errores, debes crear primero esa red:
+```bash
+docker network create backend_default
+```
 
-## Contributing
+### 3. Construir y Levantar los Contenedores
+Dentro de la carpeta raíz del proyecto clonado, levanta la aplicación. Este comando descargará Node, PHP, Composer y compilará automáticamente todos los archivos estáticos y dependencias de PHP.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+docker compose up -d --build
+```
 
-## Code of Conduct
+### 4. Configurar Base de Datos (Opcional si ya la red externa tiene los datos)
+Si es la primera vez que levantas la aplicación y la base de datos MySQL (host: `donatellos_mysql`) ya está conectada a la red, debes correr las migraciones:
+```bash
+docker compose exec app php artisan migrate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 5. Acceder al Panel
+Abre tu navegador de preferencia y visita:
+[http://localhost:8000](http://localhost:8000)
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+¡Listo! Verás la pantalla de inicio de sesión de Donatellos Admin.

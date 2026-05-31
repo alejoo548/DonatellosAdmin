@@ -1,0 +1,274 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,800&display=swap');
+
+:root {
+  /* Override Bootstrap colors for dark mode + neon green accent */
+  --bs-body-bg: #0f172a !important; /* slate-900 */
+  --bs-body-color: #f8fafc !important; /* slate-50 */
+  
+  --bs-primary: #a3e635 !important; /* lime-400 */
+  --bs-primary-rgb: 163, 230, 53 !important;
+  
+  --bs-secondary: #1e293b !important; /* slate-800 */
+  --bs-secondary-rgb: 30, 41, 59 !important;
+  
+  --bs-success: #a3e635 !important;
+  --bs-info: #38bdf8 !important;
+  --bs-warning: #fbbf24 !important;
+  --bs-danger: #f87171 !important;
+  
+  --bs-light: #1e293b !important;
+  --bs-dark: #020617 !important;
+
+  --bs-heading-color: #f8fafc !important;
+  --bs-link-color: #a3e635 !important;
+  --bs-link-hover-color: #bbf7d0 !important;
+
+  --bs-border-color: rgba(51, 65, 85, 0.6) !important;
+  --bs-form-control-bg: #0f172a !important;
+}
+
+body, html {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+  font-family: 'Outfit', sans-serif !important;
+  overflow-x: hidden;
+}
+
+/* ========================================================
+   LAYOUT FIXES: TOUCHING THE TOP & BACKGROUNDS
+   ======================================================== */
+#main-wrapper, .page-wrapper, .body-wrapper, .body-wrapper-inner {
+    background-color: #0f172a !important; /* Force slate-900 */
+}
+.page-wrapper {
+    padding-top: 0 !important; /* Remove top padding so header/sidebar touch top */
+}
+
+/* Pizza Pattern Background on body-wrapper */
+.body-wrapper {
+    margin-top: 0 !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath transform='translate(20, 20) rotate(15) scale(1.5)' d='M12 2C8.43 2 5.23 3.54 3 5.92L12 22l9-16.08C18.77 3.54 15.57 2 12 2zM12 4.5c.83 0 1.5.67 1.5 1.5S12.83 7.5 12 7.5 10.5 6.83 10.5 6 11.17 4.5 12 4.5zm-3 4c.83 0 1.5.67 1.5 1.5S9.83 11.5 9 11.5 7.5 10.83 7.5 10 8.17 8.5 9 8.5zm6 4c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5z'/%3E%3Cpath transform='translate(130, 110) rotate(-45) scale(1.2)' d='M12 2C8.43 2 5.23 3.54 3 5.92L12 22l9-16.08C18.77 3.54 15.57 2 12 2zM12 4.5c.83 0 1.5.67 1.5 1.5S12.83 7.5 12 7.5 10.5 6.83 10.5 6 11.17 4.5 12 4.5zm-3 4c.83 0 1.5.67 1.5 1.5S9.83 11.5 9 11.5 7.5 10.83 7.5 10 8.17 8.5 9 8.5zm6 4c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5z'/%3E%3C/g%3E%3C/svg%3E") !important;
+    background-repeat: repeat !important;
+}
+.left-sidebar {
+    background-color: #1e293b !important;
+    border-right: 1px solid rgba(51, 65, 85, 0.6) !important;
+    top: 0 !important;
+    margin: 0 !important;
+    height: 100vh !important;
+    border-radius: 0 !important; /* Removes floating rounded look */
+    box-shadow: 4px 0 15px rgba(0,0,0,0.3) !important;
+    z-index: 100;
+}
+.brand-logo {
+    padding-top: 1.5rem !important; /* Add space since it touches the top now */
+}
+.body-wrapper {
+    margin-top: 0 !important;
+}
+.app-header {
+    background: rgba(15, 23, 42, 0.8) !important;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(51, 65, 85, 0.6) !important;
+    top: 0 !important;
+    margin-top: 0 !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+.container-fluid {
+    padding-top: 80px !important; /* Keep enough space for the fixed header, but remove excess */
+}
+
+
+/* ========================================================
+   ANIMATIONS & PREMIUM DESIGN
+   ======================================================== */
+/* Fade in and slide up */
+@keyframes slideUpFade {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.container-fluid > .row, .container-fluid > .card {
+    animation: slideUpFade 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  color: #f8fafc !important;
+  font-family: 'Outfit', sans-serif !important;
+  font-weight: 700 !important;
+}
+.text-dark { color: #f8fafc !important; }
+.text-muted { color: #94a3b8 !important; }
+.bg-light { background-color: #1e293b !important; }
+.bg-white { background-color: #1e293b !important; }
+.text-primary { color: #a3e635 !important; }
+.bg-primary { background-color: #a3e635 !important; color: #0f172a !important; }
+
+/* Enhanced Cards (Glassmorphism + Gradients) */
+.card {
+  background: linear-gradient(145deg, #1e293b, #151f2e) !important;
+  border: 1px solid rgba(51, 65, 85, 0.6) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4) !important;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.card:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), 0 0 15px rgba(163, 230, 53, 0.05) !important;
+}
+.card-title, .card-header, .card-body {
+  color: #f8fafc !important;
+  border-bottom-color: rgba(51, 65, 85, 0.6) !important;
+}
+
+/* Sidebar links */
+.sidebar-nav ul .sidebar-item .sidebar-link {
+  color: #cbd5e1 !important;
+  border-radius: 10px !important;
+  transition: all 0.3s ease !important;
+  margin-bottom: 5px;
+}
+.sidebar-nav ul .sidebar-item .sidebar-link:hover,
+.sidebar-nav ul .sidebar-item .sidebar-link.active {
+  background: linear-gradient(90deg, rgba(163,230,53,0.15) 0%, rgba(163,230,53,0.02) 100%) !important;
+  color: #a3e635 !important;
+  transform: translateX(6px);
+  border-left: 4px solid #a3e635 !important;
+}
+
+/* Forms */
+.form-control, .form-select {
+  background-color: rgba(15, 23, 42, 0.6) !important;
+  border: 1px solid rgba(51, 65, 85, 0.6) !important;
+  color: #f8fafc !important;
+  border-radius: 8px !important;
+  transition: all 0.3s ease;
+}
+.form-control:focus, .form-select:focus {
+  background-color: #0f172a !important;
+  border-color: #a3e635 !important;
+  box-shadow: 0 0 0 4px rgba(163, 230, 53, 0.15) !important;
+  color: #f8fafc !important;
+}
+
+/* Buttons with Neon Glow */
+.btn-primary {
+  background: linear-gradient(135deg, #a3e635, #84cc16) !important;
+  border: none !important;
+  color: #0f172a !important;
+  font-weight: 700 !important;
+  border-radius: 10px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 0 4px 15px rgba(163, 230, 53, 0.3) !important;
+  padding: 0.6rem 1.2rem;
+}
+.btn-primary:hover, .btn-primary:focus {
+  background: linear-gradient(135deg, #bbf7d0, #a3e635) !important;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(163, 230, 53, 0.5), 0 0 15px rgba(163, 230, 53, 0.4) !important;
+  color: #0f172a !important;
+}
+.btn-outline-primary {
+  color: #a3e635 !important;
+  border: 2px solid #a3e635 !important;
+  background: transparent !important;
+  border-radius: 10px !important;
+  transition: all 0.3s ease !important;
+}
+.btn-outline-primary:hover {
+  background-color: #a3e635 !important;
+  color: #0f172a !important;
+  box-shadow: 0 4px 15px rgba(163, 230, 53, 0.3) !important;
+}
+
+/* Dropify Dark Theme */
+.dropify-wrapper {
+  background-color: rgba(15, 23, 42, 0.6) !important;
+  border: 1px solid rgba(51, 65, 85, 0.6) !important;
+  color: #f8fafc !important;
+  border-radius: 8px !important;
+}
+.dropify-wrapper:hover {
+  background-image: none !important;
+  background-color: rgba(15, 23, 42, 0.8) !important;
+  border-color: #a3e635 !important;
+  box-shadow: 0 0 0 4px rgba(163, 230, 53, 0.15) !important;
+}
+.dropify-wrapper .dropify-message p {
+  color: #94a3b8 !important;
+  font-family: 'Outfit', sans-serif !important;
+}
+.dropify-wrapper .dropify-preview {
+  background-color: #0f172a !important;
+}
+.dropify-wrapper .dropify-clear {
+  color: #0f172a !important;
+  background-color: #f87171 !important;
+}
+
+/* Tables */
+.table {
+  color: #f8fafc !important;
+  background-color: transparent !important;
+}
+.table-borderless > :not(caption) > * > * {
+  border-bottom-width: 0 !important;
+}
+.table td, .table th, .table tr {
+  color: #f8fafc !important;
+  background-color: transparent !important;
+  border-top-color: rgba(51, 65, 85, 0.4) !important;
+  border-bottom-color: rgba(51, 65, 85, 0.4) !important;
+  padding: 1rem !important;
+}
+.table th {
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  color: #94a3b8 !important;
+}
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+    background-color: rgba(255, 255, 255, 0.02) !important;
+    color: #f8fafc !important;
+}
+.table-hover > tbody > tr {
+    transition: all 0.2s ease !important;
+}
+.table-hover > tbody > tr:hover > * {
+    background-color: rgba(163, 230, 53, 0.08) !important;
+    color: #a3e635 !important;
+}
+
+/* Misc overrides */
+.dropdown-menu {
+  background: rgba(30, 41, 59, 0.95) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(51, 65, 85, 0.6) !important;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+.dropdown-item {
+  color: #f8fafc !important;
+  transition: all 0.2s ease;
+}
+.dropdown-item:hover {
+  background-color: rgba(163, 230, 53, 0.15) !important;
+  color: #a3e635 !important;
+}
+.timeline-widget .timeline-time {
+  color: #cbd5e1 !important;
+}
+
+/* Brand specific styling */
+.logo-img {
+  font-family: 'Outfit', sans-serif !important;
+  font-weight: 800 !important;
+  font-style: italic !important;
+  color: #f8fafc !important;
+  text-transform: uppercase;
+  text-decoration: none !important;
+  letter-spacing: -0.5px;
+}
+.logo-img .text-primary {
+  color: #a3e635 !important;
+}
