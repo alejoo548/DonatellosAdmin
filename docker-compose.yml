@@ -1,0 +1,34 @@
+services:
+  app:
+    build:
+      context: .
+    container_name: drugstore-app
+    ports:
+      - "8000:80"
+    environment:
+      APP_NAME: DrugStore
+      APP_ENV: ${APP_ENV:-local}
+      APP_DEBUG: ${APP_DEBUG:-true}
+      APP_URL: ${APP_URL:-http://localhost:8000}
+      DB_CONNECTION: ${DB_CONNECTION:-mysql}
+      DB_HOST: ${DB_HOST:-donatellos_mysql}
+      DB_PORT: ${DB_PORT:-3306}
+      DB_DATABASE: ${DB_DATABASE:-donatellos_db}
+      DB_USERNAME: ${DB_USERNAME:-donatellos_user}
+      DB_PASSWORD: ${DB_PASSWORD}
+      SESSION_DRIVER: ${SESSION_DRIVER:-database}
+      CACHE_STORE: ${CACHE_STORE:-database}
+      QUEUE_CONNECTION: ${QUEUE_CONNECTION:-database}
+    volumes:
+      - drugstore_storage:/var/www/html/storage
+    networks:
+      - default
+      - backend
+
+volumes:
+  drugstore_storage:
+
+networks:
+  backend:
+    external: true
+    name: backend_default
