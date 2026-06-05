@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Menu Categories | Donatellos Admin</title>
+    <title>Add Carousel Slide | Donatellos Admin</title>
     <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
     <link rel="stylesheet" href="{{ asset('assets/css/styles.min.css') }}" />
-<link rel="stylesheet" href="{{ asset('assets/css/custom-dark-theme.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/custom-dark-theme.css') }}" />
 </head>
 
 <body>
@@ -16,17 +16,15 @@
 
         <!-- Sidebar -->
         <aside class="left-sidebar">
-            <!-- Sidebar scroll-->
             <div>
                 <div class="brand-logo d-flex align-items-center justify-content-between">
-                    <a href="{{ route("dashboard") }}" class="text-nowrap logo-img">
+                    <a href="{{ route('dashboard') }}" class="text-nowrap logo-img">
                         <span class="logo-img text-nowrap d-flex align-items-center fw-bolder fs-5 text-white" style="font-size: 1.3rem !important;">Donatellos <span class="text-primary ms-1" style="color: #a3e635 !important;">Admin</span></span>
                     </a>
                     <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                         <i class="ti ti-x fs-8"></i>
                     </div>
                 </div>
-                <!-- Sidebar navigation-->
                 <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
                     <ul id="sidebarnav">
                         <li class="nav-small-cap">
@@ -34,8 +32,7 @@
                             <span class="hide-menu">Home</span>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link primary-hover-bg" href="{{ route("dashboard") }}"
-                                aria-expanded="false">
+                            <a class="sidebar-link primary-hover-bg" href="{{ route('dashboard') }}" aria-expanded="false">
                                 <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
                                 <span class="hide-menu">Dashboard</span>
                             </a>
@@ -45,8 +42,7 @@
                             <span class="hide-menu">Menu Items</span>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link primary-hover-bg" href="{{ url("/products") }}"
-                                aria-expanded="false">
+                            <a class="sidebar-link primary-hover-bg" href="{{ url('/products') }}" aria-expanded="false">
                                 <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
                                 <span class="hide-menu">Menu Items</span>
                             </a>
@@ -56,8 +52,7 @@
                             <span class="hide-menu">Menu Categories</span>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link primary-hover-bg" href="{{ url("/categories") }}"
-                                aria-expanded="false">
+                            <a class="sidebar-link primary-hover-bg" href="{{ url('/categories') }}" aria-expanded="false">
                                 <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
                                 <span class="hide-menu">Menu Categories</span>
                             </a>
@@ -67,18 +62,14 @@
                             <span class="hide-menu">Carousel</span>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link primary-hover-bg" href="{{ url('/carousel') }}"
-                                aria-expanded="false">
+                            <a class="sidebar-link primary-hover-bg" href="{{ url('/carousel') }}" aria-expanded="false">
                                 <iconify-icon icon="solar:gallery-wide-line-duotone"></iconify-icon>
                                 <span class="hide-menu">Carousel</span>
                             </a>
                         </li>
-
                     </ul>
                 </nav>
-                <!-- End Sidebar navigation -->
             </div>
-            <!-- End Sidebar scroll-->
         </aside>
 
         <!-- Main wrapper -->
@@ -86,7 +77,6 @@
             <div class="body-wrapper-inner">
                 <div class="container-fluid">
 
-                    <!-- Header -->
                     <header class="app-header">
                         <nav class="navbar navbar-expand-lg navbar-light">
                             <ul class="navbar-nav">
@@ -101,16 +91,13 @@
                                     <li class="nav-item dropdown">
                                         <a class="nav-link" href="javascript:void(0)" id="drop2"
                                             data-bs-toggle="dropdown" aria-expanded="false">
-                                            <img src="../assets/images/profile/user1.jpg" alt="" width="35" height="35"
-                                                class="rounded-circle">
+                                            <img src="{{ asset('assets/images/profile/user1.jpg') }}" alt="" width="35" height="35" class="rounded-circle">
                                         </a>
-                                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
-                                            aria-labelledby="drop2">
+                                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                                             <div class="message-body">
                                                 <form action="{{ route('logout') }}" method="POST">
                                                     @csrf
-                                                    <button type="submit"
-                                                        class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</button>
+                                                    <button type="submit" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -120,61 +107,81 @@
                         </nav>
                     </header>
 
-                    <!-- Content -->
-                    <div class="row">
-                        <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h5 class="card-title fw-semibold mb-0">Add Carousel Slide</h5>
+                                <a href="{{ route('carousel.index') }}" class="btn btn-outline-secondary btn-sm">
+                                    <i class="ti ti-arrow-left me-1"></i> Back
+                                </a>
+                            </div>
+
+                            @if($errors->any())
+                                <div class="alert alert-danger" role="alert">
+                                    <ul class="mb-0">
+                                        @foreach($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="d-flex align-items-center justify-content-between mb-4">
-                                        <h5 class="card-title fw-semibold mb-0">Menu Categories</h5>
-                                        <a href="{{ route('categories.create') }}" class="btn btn-primary">
-                                            <i class="ti ti-plus me-1"></i> Add Menu Category
-                                        </a>
-                                    </div>
+                                    <form action="{{ route('carousel.store') }}" method="POST">
+                                        @csrf
 
-                                    @if(session('success'))
-                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                            {{ session('success') }}
-                                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                        <div class="mb-3">
+                                            <label for="product_id" class="form-label">Product</label>
+                                            <select class="form-select" id="product_id" name="product_id" required>
+                                                <option value="">Select a product</option>
+                                                @foreach($products as $product)
+                                                    <option value="{{ $product->id }}" {{ old('product_id') == $product->id ? 'selected' : '' }}>
+                                                        {{ $product->name }} — ${{ number_format($product->price, 2) }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            <div class="form-text">Price is taken from the product automatically.</div>
                                         </div>
-                                    @endif
 
-                                    <div class="table-responsive">
-                                        <table class="table table-borderless align-middle text-nowrap">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Description</th>
-                                                    <th>Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @forelse($categories as $category)
-                                                <tr>
-                                                    <td>{{ $category->name }}</td>
-                                                    <td>{{ $category->description }}</td>
-                                                    <td>
-                                                        <a href="{{ route('categories.edit', $category) }}" class="btn btn-sm btn-outline-primary me-1">
-                                                            <i class="ti ti-pencil"></i>
-                                                        </a>
-                                                        <form action="{{ route('categories.destroy', $category) }}" method="POST" class="d-inline"
-                                                            onsubmit="return confirm('Delete this menu category?')">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-sm btn-outline-danger">
-                                                                <i class="ti ti-trash"></i>
-                                                            </button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                                @empty
-                                                <tr>
-                                                    <td colspan="3" class="text-center text-muted py-4">No menu categories registered.</td>
-                                                </tr>
-                                                @endforelse
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                        <div class="mb-3">
+                                            <label for="title" class="form-label">Slide Title</label>
+                                            <input type="text" class="form-control" id="title" name="title"
+                                                required maxlength="255" value="{{ old('title') }}"
+                                                placeholder="e.g. The Sewer Supreme">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="description" class="form-label">Slide Description</label>
+                                            <textarea class="form-control" id="description" name="description"
+                                                rows="3" required maxlength="500"
+                                                placeholder="e.g. Pepperoni, sausage, green peppers, onions, and extra ooze cheese">{{ old('description') }}</textarea>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="badge_text" class="form-label">Badge Text <span class="text-muted">(optional)</span></label>
+                                            <input type="text" class="form-control" id="badge_text" name="badge_text"
+                                                maxlength="100" value="{{ old('badge_text') }}"
+                                                placeholder="e.g. New Arrival">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="order" class="form-label">Order</label>
+                                            <input type="number" class="form-control" id="order" name="order"
+                                                min="0" value="{{ old('order', 0) }}" required>
+                                            <div class="form-text">Lower number appears first.</div>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="is_active"
+                                                    name="is_active" value="1" {{ old('is_active', true) ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="is_active">Active</label>
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary">Save Slide</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

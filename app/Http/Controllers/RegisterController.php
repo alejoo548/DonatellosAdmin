@@ -32,6 +32,6 @@ class RegisterController extends Controller
             'role' => 'admin',
         ]);
 
-        return redirect()->route('login')->with('success', 'Administrador registrado. Inicia sesión.');
+        return redirect()->route('login')->with('success', 'Administrator registered. Please log in.');
     }
 }

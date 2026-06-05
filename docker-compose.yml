@@ -20,13 +20,10 @@ services:
       CACHE_STORE: ${CACHE_STORE:-database}
       QUEUE_CONNECTION: ${QUEUE_CONNECTION:-database}
     volumes:
-      - drugstore_storage:/var/www/html/storage
+      - ../../DonatellosPizza/backend/src/storage:/var/www/html/storage
     networks:
       - default
       - backend
-
-volumes:
-  drugstore_storage:
 
 networks:
   backend:

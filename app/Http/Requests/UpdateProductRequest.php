@@ -27,8 +27,16 @@ class UpdateProductRequest extends FormRequest
             'description' => ['required', 'string', 'max:1000'],
             'price' => ['required', 'numeric', 'min:0'],
             'stock' => ['required', 'integer', 'min:0'],
-            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'mimetypes:image/jpeg,image/png,image/gif', 'max:5120'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'mimetypes:image/jpeg,image/png,image/gif,image/webp', 'max:5120'],
             'category_id' => ['required', 'exists:categories,id'],
+
+            'sizes' => ['nullable', 'array'],
+            'sizes.*.name' => ['nullable', 'string', 'max:255'],
+            'sizes.*.extra_price' => ['nullable', 'numeric', 'min:0'],
+
+            'crusts' => ['nullable', 'array'],
+            'crusts.*.name' => ['nullable', 'string', 'max:255'],
+            'crusts.*.extra_price' => ['nullable', 'numeric', 'min:0'],
         ];
     }
 }

@@ -1,10 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CarouselItemController;
+use App\Models\User;
+use App\Models\Product;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,17 +25,27 @@ Route::middleware(['guest'])->group(function () {
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        $usersCount = User::count();
+        $productsCount = Product::count();
+
+        $purchasesCount = 0;
+        if (Schema::hasTable('cart_items')) {
+            try {
+                $purchasesCount = DB::table('cart_items')->count();
+            } catch (\Throwable $e) {
+                $purchasesCount = 0;
+            }
+        }
+
+        return view('dashboard', [
+            'usersCount' => $usersCount,
+            'productsCount' => $productsCount,
+            'purchasesCount' => $purchasesCount,
+        ]);
     })->name('dashboard');
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     Route::resource('/products', ProductController::class);
     Route::resource('/categories', CategoryController::class);
+    Route::resource('/carousel', CarouselItemController::class);
 });
-Route::get('/calculadora', [App\Http\Controllers\CalculadoraController::class, 'index'])->name('calculadora');
-Route::post('/calculadora', [App\Http\Controllers\CalculadoraController::class, 'calculate'])->name('calculadora.calculate');
-
-Route::get('/promedios', [App\Http\Controllers\PromediosController::class, 'index'])
-        ->name('promedios');
-
-Route::post('/promedios', [App\Http\Controllers\PromediosController::class, 'calcular']);

@@ -28,7 +28,7 @@ class LoginController extends Controller
 
         return back()
             ->withInput($request->only('email'))
-            ->with('error', 'Credenciales incorrectas o usuario no administrador.');
+            ->with('error', 'Invalid credentials or user is not an administrator.');
     }
 
     public function logout(Request $request)
@@ -38,6 +38,6 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login')->with('logout', 'Has cerrado sesión correctamente.');
+        return redirect()->route('login')->with('logout', 'You have logged out successfully.');
     }
 }

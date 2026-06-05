@@ -65,27 +65,15 @@
                         </li>
                         <li class="nav-small-cap">
                             <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
-                            <span class="hide-menu">Calculadora</span>
+                            <span class="hide-menu">Carousel</span>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link primary-hover-bg" href="{{ url("/calculadora") }}"
+                            <a class="sidebar-link primary-hover-bg" href="{{ url("/carousel") }}"
                                 aria-expanded="false">
-                                <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
-                                <span class="hide-menu">Calculadora</span>
+                                <iconify-icon icon="solar:gallery-wide-line-duotone"></iconify-icon>
+                                <span class="hide-menu">Carousel</span>
                             </a>
                         </li>
-                        <li class="nav-small-cap">
-                            <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
-                            <span class="hide-menu">Calculadora de promedios</span>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link primary-hover-bg" href="{{ url("/promedios") }}"
-                                aria-expanded="false">
-                                <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
-                                <span class="hide-menu">Calculadora de promedios</span>
-                            </a>
-                        </li>
-
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
@@ -203,7 +191,7 @@
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <div class="me-3">
-                                                        <img src="{{ asset('storage/' . $product->image) }}"
+                                                        <img src="{{ $product->image_url }}"
                                                             alt="{{ $product->name }}" width="50" height="50"
                                                             class="rounded-circle" />
                                                     </div>

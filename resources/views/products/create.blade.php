@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Create Menu Item | Donatellos Admin</title>
-    <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
-    <link rel="stylesheet" href="../assets/css/styles.min.css" />
+    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/images/logos/favicon.png') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/styles.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/custom-dark-theme.css') }}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" />
 </head>
@@ -67,24 +67,13 @@
                         </li>
                         <li class="nav-small-cap">
                             <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
-                            <span class="hide-menu">Calculadora</span>
+                            <span class="hide-menu">Carousel</span>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link primary-hover-bg" href="{{ url("/calculadora") }}"
+                            <a class="sidebar-link primary-hover-bg" href="{{ url('/carousel') }}"
                                 aria-expanded="false">
-                                <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
-                                <span class="hide-menu">Calculadora</span>
-                            </a>
-                        </li>
-                        <li class="nav-small-cap">
-                            <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
-                            <span class="hide-menu">Calculadora de promedios</span>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link primary-hover-bg" href="{{ url("/promedios") }}"
-                                aria-expanded="false">
-                                <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
-                                <span class="hide-menu">Calculadora de promedios</span>
+                                <iconify-icon icon="solar:gallery-wide-line-duotone"></iconify-icon>
+                                <span class="hide-menu">Carousel</span>
                             </a>
                         </li>
 
@@ -132,7 +121,7 @@
                                     <li class="nav-item dropdown">
                                         <a class="nav-link " href="javascript:void(0)" id="drop2"
                                             data-bs-toggle="dropdown" aria-expanded="false">
-                                            <img src="../assets/images/profile/user1.jpg" alt="" width="35" height="35"
+                                            <img src="{{ asset('assets/images/profile/user1.jpg') }}" alt="" width="35" height="35"
                                                 class="rounded-circle">
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
@@ -263,11 +252,11 @@
             </div>
         </div>
     </div>
-    <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
-    <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/js/sidebarmenu.js"></script>
-    <script src="../assets/js/app.min.js"></script>
-    <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
+    <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/sidebarmenu.js') }}"></script>
+    <script src="{{ asset('assets/js/app.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/simplebar/dist/simplebar.js') }}"></script>
     <!-- solar icons -->
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>

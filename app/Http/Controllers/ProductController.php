@@ -42,14 +42,17 @@ class ProductController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
 
-            // Security Check: Scan for PHP tags or scripts to prevent polyglot injection
-            $content = file_get_contents($file->getRealPath());
-            if (preg_match('/<\?php|<\?=|<script/i', $content)) {
-                return back()->withErrors(['image' => 'El archivo contiene firmas maliciosas y fue bloqueado por seguridad.'])->withInput();
+            // Security Check: Scan first 8KB for PHP tags or scripts (prevents polyglot injection, avoids loading huge files into memory)
+            $handle = fopen($file->getRealPath(), 'r');
+            $head = fread($handle, 8192);
+            fclose($handle);
+            if (preg_match('/<\?php|<\?=|<script/i', $head)) {
+                return back()->withErrors(['image' => 'The file contains malicious signatures and was blocked for security.'])->withInput();
             }
 
-            $imagePath = $file->store('products', 'public');
-            $validatedData['image'] = $imagePath;
+            $relativePath = $file->store('products', 'public');
+            // Store a full public URL so it can be used directly by the mobile app / other clients as <img src="...">
+            $validatedData['image'] = Storage::disk('public')->url($relativePath);
         }
 
         $product = Product::create($validatedData);
@@ -113,18 +116,23 @@ class ProductController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
 
-            // Security Check: Scan for PHP tags or scripts to prevent polyglot injection
-            $content = file_get_contents($file->getRealPath());
-            if (preg_match('/<\?php|<\?=|<script/i', $content)) {
-                return back()->withErrors(['image' => 'El archivo contiene firmas maliciosas y fue bloqueado por seguridad.'])->withInput();
+            // Security Check: Scan first 8KB for PHP tags or scripts (prevents polyglot injection)
+            $handle = fopen($file->getRealPath(), 'r');
+            $head = fread($handle, 8192);
+            fclose($handle);
+            if (preg_match('/<\?php|<\?=|<script/i', $head)) {
+                return back()->withErrors(['image' => 'The file contains malicious signatures and was blocked for security.'])->withInput();
             }
 
-            if ($product->image && Storage::disk('public')->exists($product->image)) {
-                Storage::disk('public')->delete($product->image);
+            // Delete previous image using the relative storage path (handles both old relative and new full-URL values in DB)
+            $oldPath = $product->image_path;
+            if ($oldPath && Storage::disk('public')->exists($oldPath)) {
+                Storage::disk('public')->delete($oldPath);
             }
 
-            $imagePath = $file->store('products', 'public');
-            $validatedData['image'] = $imagePath;
+            $relativePath = $file->store('products', 'public');
+            // Store full public URL for direct use in the app
+            $validatedData['image'] = Storage::disk('public')->url($relativePath);
         }
 
         $product->update($validatedData);
@@ -163,8 +171,10 @@ class ProductController extends Controller
      */
     public function destroy(Product $product): RedirectResponse
     {
-        if ($product->image && Storage::disk('public')->exists($product->image)) {
-            Storage::disk('public')->delete($product->image);
+        // Use the computed relative path so deletion works whether DB has relative path or full URL
+        $path = $product->image_path;
+        if ($path && Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
         }
 
         $product->delete();
