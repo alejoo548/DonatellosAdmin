@@ -204,17 +204,16 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="status" class="form-label">Availability</label>
-                                            <select class="form-select" id="status" name="status" required>
-                                                <option value="">Select availability</option>
-                                                <option value="available"
-                                                    {{ old('status', $product->status) == 'available' || old('status', $product->status) == 'activo' ? 'selected' : '' }}>
-                                                    Available</option>
-                                                <option value="unavailable"
-                                                    {{ old('status', $product->status) == 'unavailable' || old('status', $product->status) == 'inactivo' ? 'selected' : '' }}>
-                                                    Unavailable</option>
-                                            </select>
-                                        </div>
+    <label for="stock" class="form-label">Stock</label>
+    <input type="number"
+           class="form-control"
+           id="stock"
+           name="stock"
+           min="0"
+           step="1"
+           required
+           value="{{ old('stock', $product->stock) }}">
+</div>
 
                                         <div class="mb-3">
                                             <label for="image" class="form-label">Item Image</label>
@@ -235,6 +234,62 @@
                                                 @endforeach
                                             </select>
                                         </div>
+
+                                        <div id="pizza-options" style="display:none;">
+    <hr>
+
+    <h5>Pizza Sizes</h5>
+    <div id="sizes-container">
+        @foreach($product->options->where('type', 'size')->values() as $index => $option)
+            <div class="row mb-2">
+                <div class="col-md-6">
+                    <input type="text" name="sizes[{{ $index }}][name]"
+                           class="form-control"
+                           value="{{ old("sizes.$index.name", $option->name) }}">
+                </div>
+                <div class="col-md-4">
+                    <input type="number" name="sizes[{{ $index }}][extra_price]"
+                           class="form-control" step="0.01" min="0"
+                           value="{{ old("sizes.$index.extra_price", $option->extra_price) }}">
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-danger w-100" onclick="this.closest('.row').remove()">X</button>
+                </div>
+            </div>
+        @endforeach
+    </div>
+
+    <button type="button" class="btn btn-outline-primary mb-3" onclick="addOption('size')">
+        + Add Size
+    </button>
+
+    <hr>
+
+    <h5>Crust Options</h5>
+    <div id="crusts-container">
+        @foreach($product->options->where('type', 'crust')->values() as $index => $option)
+            <div class="row mb-2">
+                <div class="col-md-6">
+                    <input type="text" name="crusts[{{ $index }}][name]"
+                           class="form-control"
+                           value="{{ old("crusts.$index.name", $option->name) }}">
+                </div>
+                <div class="col-md-4">
+                    <input type="number" name="crusts[{{ $index }}][extra_price]"
+                           class="form-control" step="0.01" min="0"
+                           value="{{ old("crusts.$index.extra_price", $option->extra_price) }}">
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-danger w-100" onclick="this.closest('.row').remove()">X</button>
+                </div>
+            </div>
+        @endforeach
+    </div>
+
+    <button type="button" class="btn btn-outline-primary mb-3" onclick="addOption('crust')">
+        + Add Crust
+    </button>
+</div>
 
                                         <button type="submit" class="btn btn-primary">Save Menu Item</button>
                                     </form>
@@ -260,6 +315,63 @@
             $('.dropify').dropify();
         });
     </script>
+    <script>
+let sizeIndex = {{ $product->options->where('type', 'size')->count() }};
+let crustIndex = {{ $product->options->where('type', 'crust')->count() }};
+
+function addOption(type) {
+    const container = type === 'size'
+        ? document.getElementById('sizes-container')
+        : document.getElementById('crusts-container');
+
+    const index = type === 'size' ? sizeIndex++ : crustIndex++;
+
+    const row = document.createElement('div');
+    row.className = 'row mb-2';
+
+    row.innerHTML = `
+        <div class="col-md-6">
+            <input type="text"
+                   name="${type}s[${index}][name]"
+                   class="form-control"
+                   placeholder="${type === 'size' ? 'Size name, e.g. Medium' : 'Crust name, e.g. Thin Crust'}">
+        </div>
+
+        <div class="col-md-4">
+            <input type="number"
+                   name="${type}s[${index}][extra_price]"
+                   class="form-control"
+                   step="0.01"
+                   min="0"
+                   placeholder="Extra price (optional)">
+        </div>
+
+        <div class="col-md-2">
+            <button type="button" class="btn btn-danger w-100" onclick="this.closest('.row').remove()">X</button>
+        </div>
+    `;
+
+    container.appendChild(row);
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const categorySelect = document.getElementById('category_id');
+    const pizzaOptions = document.getElementById('pizza-options');
+
+    function togglePizzaOptions() {
+        const selectedText = categorySelect.options[categorySelect.selectedIndex]
+            .text
+            .toLowerCase();
+
+        pizzaOptions.style.display = selectedText.includes('pizza')
+            ? 'block'
+            : 'none';
+    }
+
+    categorySelect.addEventListener('change', togglePizzaOptions);
+    togglePizzaOptions();
+});
+</script>
 </body>
 
 </html>

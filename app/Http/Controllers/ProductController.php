@@ -37,11 +37,11 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         $validatedData = $request->validated();
-        $validatedData['stock'] = $validatedData['stock'] ?? 0;
+        $validatedData['stock'] = (int) $validatedData['stock'];
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            
+
             // Security Check: Scan for PHP tags or scripts to prevent polyglot injection
             $content = file_get_contents($file->getRealPath());
             if (preg_match('/<\?php|<\?=|<script/i', $content)) {
@@ -52,7 +52,31 @@ class ProductController extends Controller
             $validatedData['image'] = $imagePath;
         }
 
-        Product::create($validatedData);
+        $product = Product::create($validatedData);
+
+        if ($request->has('sizes')) {
+            foreach ($request->sizes as $size) {
+                if (!empty($size['name'])) {
+                    $product->options()->create([
+                        'type' => 'size',
+                        'name' => $size['name'],
+                        'extra_price' => $size['extra_price'] ?? 0,
+                    ]);
+                }
+            }
+        }
+
+        if ($request->has('crusts')) {
+            foreach ($request->crusts as $crust) {
+                if (!empty($crust['name'])) {
+                    $product->options()->create([
+                        'type' => 'crust',
+                        'name' => $crust['name'],
+                        'extra_price' => $crust['extra_price'] ?? 0,
+                    ]);
+                }
+            }
+        }
 
         return redirect()->route('products.index')->with('success', 'Menu item created successfully.');
     }
@@ -70,10 +94,12 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        $product->load('options');
+
         return view('products.edit', [
-    'product' => $product,
-    'categories' => Category::all(),
-]);
+            'product' => $product,
+            'categories' => Category::all(),
+        ]);
     }
 
     /**
@@ -82,28 +108,54 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, Product $product)
     {
         $validatedData = $request->validated();
-        $validatedData['stock'] = $validatedData['stock'] ?? 0;
+        $validatedData['stock'] = (int) $validatedData['stock'];
 
-if ($request->hasFile('image')) {
-    $file = $request->file('image');
-            
-    // Security Check: Scan for PHP tags or scripts to prevent polyglot injection
-    $content = file_get_contents($file->getRealPath());
-    if (preg_match('/<\?php|<\?=|<script/i', $content)) {
-        return back()->withErrors(['image' => 'El archivo contiene firmas maliciosas y fue bloqueado por seguridad.'])->withInput();
-    }
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
 
-    if ($product->image && Storage::disk('public')->exists($product->image)) {
-        Storage::disk('public')->delete($product->image);
-    }
+            // Security Check: Scan for PHP tags or scripts to prevent polyglot injection
+            $content = file_get_contents($file->getRealPath());
+            if (preg_match('/<\?php|<\?=|<script/i', $content)) {
+                return back()->withErrors(['image' => 'El archivo contiene firmas maliciosas y fue bloqueado por seguridad.'])->withInput();
+            }
 
-    $imagePath = $file->store('products', 'public');
-    $validatedData['image'] = $imagePath;
-}
+            if ($product->image && Storage::disk('public')->exists($product->image)) {
+                Storage::disk('public')->delete($product->image);
+            }
 
-$product->update($validatedData);
+            $imagePath = $file->store('products', 'public');
+            $validatedData['image'] = $imagePath;
+        }
 
-return redirect()->route('products.index')->with('success', 'Menu item updated successfully.');
+        $product->update($validatedData);
+
+        $product->options()->delete();
+
+        if ($request->has('sizes')) {
+            foreach ($request->sizes as $size) {
+                if (!empty($size['name'])) {
+                    $product->options()->create([
+                        'type' => 'size',
+                        'name' => $size['name'],
+                        'extra_price' => $size['extra_price'] ?? 0,
+                    ]);
+                }
+            }
+        }
+
+        if ($request->has('crusts')) {
+            foreach ($request->crusts as $crust) {
+                if (!empty($crust['name'])) {
+                    $product->options()->create([
+                        'type' => 'crust',
+                        'name' => $crust['name'],
+                        'extra_price' => $crust['extra_price'] ?? 0,
+                    ]);
+                }
+            }
+        }
+
+        return redirect()->route('products.index')->with('success', 'Menu item updated successfully.');
     }
 
     /**

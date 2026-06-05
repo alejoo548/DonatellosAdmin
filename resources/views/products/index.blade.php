@@ -7,7 +7,7 @@
     <title>Menu Items | Donatellos Admin</title>
     <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
     <link rel="stylesheet" href="{{ asset('assets/css/styles.min.css') }}" />
-<link rel="stylesheet" href="{{ asset('assets/css/custom-dark-theme.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/custom-dark-theme.css') }}" />
 </head>
 
 <body>
@@ -20,7 +20,9 @@
             <div>
                 <div class="brand-logo d-flex align-items-center justify-content-between">
                     <a href="{{ route("dashboard") }}" class="text-nowrap logo-img">
-                        <span class="logo-img text-nowrap d-flex align-items-center fw-bolder fs-5 text-white" style="font-size: 1.3rem !important;">Donatellos <span class="text-primary ms-1" style="color: #a3e635 !important;">Admin</span></span>
+                        <span class="logo-img text-nowrap d-flex align-items-center fw-bolder fs-5 text-white"
+                            style="font-size: 1.3rem !important;">Donatellos <span class="text-primary ms-1"
+                                style="color: #a3e635 !important;">Admin</span></span>
                     </a>
                     <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                         <i class="ti ti-x fs-8"></i>
@@ -157,51 +159,55 @@
                                                     <th>Name</th>
                                                     <th>Description</th>
                                                     <th>Price</th>
-                                                    <th>Availability</th>
+                                                    <th>Stock</th>
                                                     <th>Category</th>
                                                     <th>Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @forelse($products as $product)
-                                                <tr>
-                                                    <td>
-                                                        <div class="d-flex align-items-center gap-3">
-                                                            @if($product->image)
-                                                                <img src="{{ asset('storage/' . $product->image) }}"
-                                                                    alt="{{ $product->name }}" width="45" height="45"
-                                                                    class="rounded" style="object-fit:cover;">
-                                                            @endif
-                                                            <span>{{ $product->name }}</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>{{ $product->description }}</td>
-                                                    <td>${{ number_format($product->price, 2) }}</td>
-                                                    <td>
-                                                        <span class="badge rounded-pill
-                                                            {{ in_array($product->status, ['available', 'activo']) ? 'bg-light-success text-success' : 'bg-light-danger text-danger' }} px-3 py-2 fs-3">
-                                                            {{ in_array($product->status, ['available', 'activo']) ? 'Available' : 'Unavailable' }}
-                                                        </span>
-                                                    </td>
-                                                    <td>{{ $product->category?->name ?? '—' }}</td>
-                                                    <td>
-                                                        <a href="{{ route('products.edit', $product) }}" class="btn btn-sm btn-outline-primary me-1">
-                                                            <i class="ti ti-pencil"></i>
-                                                        </a>
-                                                        <form action="{{ route('products.destroy', $product) }}" method="POST" class="d-inline"
-                                                            onsubmit="return confirm('Delete this menu item?')">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-sm btn-outline-danger">
-                                                                <i class="ti ti-trash"></i>
-                                                            </button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    <div class="d-flex align-items-center gap-3">
+                                                                                                        @if($product->image)
+                                                                                                            <img src="{{ asset('storage/' . $product->image) }}"
+                                                                                                                alt="{{ $product->name }}" width="45" height="45"
+                                                                                                                class="rounded" style="object-fit:cover;">
+                                                                                                        @endif
+                                                                                                        <span>{{ $product->name }}</span>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td>{{ $product->description }}</td>
+                                                                                                <td>${{ number_format($product->price, 2) }}</td>
+                                                                                                <td>
+    <span class="badge rounded-pill
+        {{ $product->stock > 0 ? 'bg-light-success text-success' : 'bg-light-danger text-danger' }}
+        px-3 py-2 fs-3">
+        {{ $product->stock > 0 ? $product->stock . ' in stock' : 'Out of stock' }}
+    </span>
+</td>
+                                                                                                <td>{{ $product->category?->name ?? '—' }}</td>
+                                                                                                <td>
+                                                                                                    <a href="{{ route('products.edit', $product) }}"
+                                                                                                        class="btn btn-sm btn-outline-primary me-1">
+                                                                                                        <i class="ti ti-pencil"></i>
+                                                                                                    </a>
+                                                                                                    <form action="{{ route('products.destroy', $product) }}"
+                                                                                                        method="POST" class="d-inline"
+                                                                                                        onsubmit="return confirm('Delete this menu item?')">
+                                                                                                        @csrf
+                                                                                                        @method('DELETE')
+                                                                                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                                                                            <i class="ti ti-trash"></i>
+                                                                                                        </button>
+                                                                                                    </form>
+                                                                                                </td>
+                                                                                            </tr>
                                                 @empty
-                                                <tr>
-                                                    <td colspan="6" class="text-center text-muted py-4">No menu items registered.</td>
-                                                </tr>
+                                                    <tr>
+                                                        <td colspan="6" class="text-center text-muted py-4">No menu items
+                                                            registered.</td>
+                                                    </tr>
                                                 @endforelse
                                             </tbody>
                                         </table>

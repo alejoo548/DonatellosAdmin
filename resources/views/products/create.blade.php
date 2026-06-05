@@ -7,8 +7,8 @@
     <title>Create Menu Item | Donatellos Admin</title>
     <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
     <link rel="stylesheet" href="../assets/css/styles.min.css" />
-<link rel="stylesheet" href="{{ asset('assets/css/custom-dark-theme.css') }}" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" />
+    <link rel="stylesheet" href="{{ asset('assets/css/custom-dark-theme.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" />
 </head>
 
 <body>
@@ -21,7 +21,9 @@
             <div>
                 <div class="brand-logo d-flex align-items-center justify-content-between">
                     <a href="{{ route("dashboard") }}" class="text-nowrap logo-img">
-                        <span class="logo-img text-nowrap d-flex align-items-center fw-bolder fs-5 text-white" style="font-size: 1.3rem !important;">Donatellos <span class="text-primary ms-1" style="color: #a3e635 !important;">Admin</span></span>
+                        <span class="logo-img text-nowrap d-flex align-items-center fw-bolder fs-5 text-white"
+                            style="font-size: 1.3rem !important;">Donatellos <span class="text-primary ms-1"
+                                style="color: #a3e635 !important;">Admin</span></span>
                     </a>
                     <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                         <i class="ti ti-x fs-8"></i>
@@ -169,13 +171,13 @@
                         <div class="card-body">
                             <h5 class="card-title fw-semibold mb-4">Create Menu Item</h5>
                             @if($errors->any())
-                            <div class="alert alert-danger" role="alert">
-                                <ul class="mb-0">
-                                    @foreach($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
+                                <div class="alert alert-danger" role="alert">
+                                    <ul class="mb-0">
+                                        @foreach($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             @endif
                             <div class="card">
                                 <div class="card-body">
@@ -202,18 +204,18 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="status" class="form-label">Availability</label>
-                                            <select class="form-select" id="status" name="status" required>
-                                                <option value="">Select availability</option>
-                                                <option value="available" {{ old('status') == 'available' ? 'selected' : '' }}>Available</option>
-                                                <option value="unavailable" {{ old('status') == 'unavailable' ? 'selected' : '' }}>Unavailable</option>
-                                            </select>
+                                            <label for="stock" class="form-label">Stock</label>
+                                            <input type="number" class="form-control" id="stock" name="stock" min="1"
+                                                step="1" required value="{{ old('stock', 1) }}">
+                                            <small class="text-muted">
+                                                Stock must be greater than 0.
+                                            </small>
                                         </div>
 
                                         <div class="mb-3">
                                             <label for="image" class="form-label">Item Image</label>
-                                            <input type="file" class="dropify" id="image" name="image"
-                                                accept="image/*" data-allowed-file-extensions="jpg png jpeg gif webp">
+                                            <input type="file" class="dropify" id="image" name="image" accept="image/*"
+                                                data-allowed-file-extensions="jpg png jpeg gif webp">
                                         </div>
 
                                         <div class="mb-3">
@@ -221,11 +223,33 @@
                                             <select class="form-select" id="category_id" name="category_id" required>
                                                 <option value="">Select category</option>
                                                 @foreach($categories as $category)
-                                                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                                                    {{ $category->name }}
-                                                </option>
+                                                    <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                                        {{ $category->name }}
+                                                    </option>
                                                 @endforeach
                                             </select>
+                                        </div>
+
+                                        <div id="pizza-options" style="display:none;">
+                                            <hr>
+
+                                            <h5>Pizza Sizes</h5>
+                                            <div id="sizes-container"></div>
+
+                                            <button type="button" class="btn btn-outline-primary mb-3"
+                                                onclick="addOption('size')">
+                                                + Add Size
+                                            </button>
+
+                                            <hr>
+
+                                            <h5>Crust Options</h5>
+                                            <div id="crusts-container"></div>
+
+                                            <button type="button" class="btn btn-outline-primary mb-3"
+                                                onclick="addOption('crust')">
+                                                + Add Crust
+                                            </button>
                                         </div>
 
                                         <button type="submit" class="btn btn-primary">Save Menu Item</button>
@@ -248,8 +272,69 @@
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('.dropify').dropify();
+        });
+    </script>
+    <script>
+        let sizeIndex = 0;
+        let crustIndex = 0;
+
+        function addOption(type) {
+            const container = type === 'size'
+                ? document.getElementById('sizes-container')
+                : document.getElementById('crusts-container');
+
+            const index = type === 'size' ? sizeIndex++ : crustIndex++;
+
+            const row = document.createElement('div');
+            row.className = 'row mb-2';
+
+            row.innerHTML = `
+        <div class="col-md-6">
+            <input type="text"
+                   name="${type}s[${index}][name]"
+                   class="form-control"
+                   placeholder="${type === 'size' ? 'Size name, e.g. Medium' : 'Crust name, e.g. Thin Crust'}">
+        </div>
+
+        <div class="col-md-4">
+            <input type="number"
+                   name="${type}s[${index}][extra_price]"
+                   class="form-control"
+                   step="0.01"
+                   min="0"
+                   placeholder="Extra price (optional)">
+        </div>
+
+        <div class="col-md-2">
+            <button type="button" class="btn btn-danger w-100" onclick="this.closest('.row').remove()">
+                X
+            </button>
+        </div>
+    `;
+
+            container.appendChild(row);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const categorySelect = document.getElementById('category_id');
+            const pizzaOptions = document.getElementById('pizza-options');
+
+            function togglePizzaOptions() {
+                const selectedText = categorySelect.options[categorySelect.selectedIndex]
+                    .text
+                    .toLowerCase();
+
+                if (selectedText.includes('pizza')) {
+                    pizzaOptions.style.display = 'block';
+                } else {
+                    pizzaOptions.style.display = 'none';
+                }
+            }
+
+            categorySelect.addEventListener('change', togglePizzaOptions);
+            togglePizzaOptions();
         });
     </script>
 </body>
